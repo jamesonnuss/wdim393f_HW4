@@ -37,7 +37,8 @@ add_action( 'add_meta_boxes', 'nysnc_call_meta_box', 10, 2 );
  * @param  array     $args    Additional arguments for the metabox.
  * @return void
  */
-function display_meta_box( $post, $args ) {
+function nysnc_display_meta_box( $post, $args ) {
+wp_nonce_field( 'bye-line-save', 'nsync_bye_line_noncename' );
 ?>
     <p>
         <label for="byeline">
@@ -57,7 +58,7 @@ function display_meta_box( $post, $args ) {
  * @param  int       $post_id    The ID for the current post.
  * @param  object    $post       The current post object.
  */
-function save_meta_box( $post_id, $post ) {
+function nysnc_save_meta_box( $post_id, $post ) {
     if ( ! isset( $_POST['byeline'] ) ) {
         return;
     }
@@ -66,7 +67,7 @@ function save_meta_box( $post_id, $post ) {
     update_post_meta( $post_id, 'byebyebye-line', $byeline );
 }
 
-add_action( 'save_post', 'save_meta_box', 10, 2 );
+add_action( 'save_post', 'nysnc_save_meta_box', 10, 2 );
 
 /**
  * Append the Bye Bye Bye Line to the content.
@@ -74,9 +75,9 @@ add_action( 'save_post', 'save_meta_box', 10, 2 );
  * @param  string    $content    The original content.
  * @return string                The altered content.
  */
-function print_byebyebye_line( $content ) {
+function nysnc_print_byebyebye_line( $content ) {
     $byebyebye_line = get_post_meta( get_the_ID(), 'byebyebye-line', true );
     return $content . $byebyebye_line;
 }
 
-add_filter( 'the_content', 'print_byebyebye_line' );
+add_filter( 'the_content', 'nysnc_print_byebyebye_line' );
