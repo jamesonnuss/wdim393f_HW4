@@ -16,18 +16,19 @@ License:     GPLv2 or later
  * @param  object    $post         The current post object.
  * @return void
  */
-function call_meta_box( $post_type, $post ) {
+function nysnc_call_meta_box( $post_type, $post ) {
+    //Registers the metabox for display
     add_meta_box(
         'byebyebye_line',
         __( 'Bye Bye Bye Line', 'byebyebye_lines' ),
-        'display_meta_box',
+        'nsync_display_meta_box',
         'post',
         'side',
         'high'
     );
 }
 
-add_action( 'add_meta_boxes', 'call_meta_box', 10, 2 );
+add_action( 'add_meta_boxes', 'nysnc_call_meta_box', 10, 2 );
 
 /**
  * Display the HTML for the metabox.
