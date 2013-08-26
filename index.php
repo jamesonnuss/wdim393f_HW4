@@ -59,6 +59,12 @@ wp_nonce_field( 'bye-line-save', 'nsync_bye_line_noncename' );
  * @param  object    $post       The current post object.
  */
 function nysnc_save_meta_box( $post_id, $post ) {
+    
+    //Help from Kyle Riemensnider
+    if ( ! wp_verify_nonce( $_POST['nsync_bye_line_noncename'], 'bye-line-save' ) ){
+        return;
+    }
+
     if ( ! isset( $_POST['byeline'] ) ) {
         return;
     }
