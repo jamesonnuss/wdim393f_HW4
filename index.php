@@ -61,14 +61,24 @@ $value = get_post_meta( $post->ID, 'byebyebye_lines', true );
  */
 function nysnc_save_meta_box( $post_id, $post ) {
     
-    //Help from Kyle Riemensnider
-    if ( ! wp_verify_nonce( $_POST['nsync_bye_line_noncename'], 'bye-line-save' ) ){
-        return;
+    if ( 'page' === $_POST[ 'post_type' ] ) {
+        if ( ! current_user_can( 'edit_page', $post_id ) ) {
+            return;
+        }
+    } else {
+        if ( ! current_user_can( 'edit_post', $post_id ) ) {
+            return;
+        }
     }
 
     if ( ! isset( $_POST['byeline'] ) ) {
         return;
     }
+
+    //Help from Kyle Riemensnider
+    if ( !isset($_POST['nysnc_bye_line_noncename']) || ! wp_verify_nonce( $_POST['kdr_bye_line_noncename'], 'saving-byeline' ) ){
+        return;
+    }    
 
     $byeline = sanitize_text_field($_POST['byeline']);
     update_post_meta( $post_id, 'byebyebye-line', $byeline );
