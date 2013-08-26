@@ -70,7 +70,7 @@ function nysnc_save_meta_box( $post_id, $post ) {
         return;
     }
 
-    $byeline = $_POST['byeline'];
+    $byeline = sanitize_text_field($_POST['byeline']);
     update_post_meta( $post_id, 'byebyebye-line', $byeline );
 }
 
