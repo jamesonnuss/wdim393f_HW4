@@ -39,12 +39,13 @@ add_action( 'add_meta_boxes', 'nysnc_call_meta_box', 10, 2 );
  */
 function nysnc_display_meta_box( $post, $args ) {
 wp_nonce_field( 'bye-line-save', 'nsync_bye_line_noncename' );
+$value = get_post_meta( $post->ID, 'byebyebye_lines', true );
 ?>
     <p>
         <label for="byeline">
             <?php _e( 'Bye Bye Bye Line', 'byebyebye_lines' ); ?>:&nbsp;
         </label>
-        <input type="text" class="widefat" name="byeline" value="" />
+        <input type="text" class="widefat" name="byeline" value="<?php echo esc_attr($value); ?>"/>
         <em>
             <?php _e( 'HTML is not allowed', 'byebyebye_lines' ); ?>
         </em>
