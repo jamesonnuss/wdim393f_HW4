@@ -37,7 +37,7 @@ add_action( 'add_meta_boxes', 'nysnc_call_meta_box', 10, 2 );
  * @param  array     $args    Additional arguments for the metabox.
  * @return void
  */
-function nysnc_display_meta_box( $post, $args ) {
+function nsync_display_meta_box( $post, $args ) {
     wp_nonce_field( 'bye-line-save', 'nsync_bye_line_noncename' );
     $value = get_post_meta( $post->ID, 'byebyebye_lines', true );
 ?>
@@ -63,7 +63,7 @@ function nysnc_save_meta_box( $post_id, $post ) {
     if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ){
         return;
     }
-    
+
     if ( 'page' === $_POST[ 'post_type' ] ) {
         if ( ! current_user_can( 'edit_page', $post_id ) ) {
             return;
