@@ -38,14 +38,14 @@ add_action( 'add_meta_boxes', 'nysnc_call_meta_box', 10, 2 );
  * @return void
  */
 function nysnc_display_meta_box( $post, $args ) {
-wp_nonce_field( 'bye-line-save', 'nsync_bye_line_noncename' );
-$value = get_post_meta( $post->ID, 'byebyebye_lines', true );
+    wp_nonce_field( 'bye-line-save', 'nsync_bye_line_noncename' );
+    $value = get_post_meta( $post->ID, 'byebyebye_lines', true );
 ?>
     <p>
         <label for="byeline">
             <?php _e( 'Bye Bye Bye Line', 'byebyebye_lines' ); ?>:&nbsp;
         </label>
-        <input type="text" class="widefat" name="byeline" value="<?php echo esc_attr($value); ?>"/>
+        <input type="text" class="widefat" name="byeline" value="<?php echo esc_attr($value);?>"/>
         <em>
             <?php _e( 'HTML is not allowed', 'byebyebye_lines' ); ?>
         </em>
@@ -76,10 +76,12 @@ function nysnc_save_meta_box( $post_id, $post ) {
     }
 
     //Help from Kyle Riemensnider
-    if ( !isset($_POST['nysnc_bye_line_noncename']) || ! wp_verify_nonce( $_POST['kdr_bye_line_noncename'], 'saving-byeline' ) ){
+    if ( !isset($_POST['nysnc_bye_line_noncename']) || ! wp_verify_nonce( $_POST['nysnc_bye_line_noncename'], 'saving-byeline' ) ){
         return;
     }    
 
+
+    //More Help from Kyle Riemensnider
     $byeline = sanitize_text_field($_POST['byeline']);
     update_post_meta( $post_id, 'byebyebye-line', $byeline );
 }
@@ -96,5 +98,17 @@ function nysnc_print_byebyebye_line( $content ) {
     $byebyebye_line = get_post_meta( get_the_ID(), 'byebyebye-line', true );
     return $content . $byebyebye_line;
 }
+/*
+    Five Errors Found:
+                        1. Function Names were not prefixed
+                        2. Function nsync_save_meta_box does not check for autosave
+                        3. Sanitizations were needed in the plugin
+                        4. Added esc_attr to return value of byebyebye_lines
+                        5. Added nonce to nsync_display_meta_box
 
+
+Since I am not the best with PHP I did recieve help from Kyle Riemensnider on the errors that I could not find on my own. 
+I will say that you do cover all of these best practices in each lecture, so I found your notes on github and the codex
+to be extremely helpful.
+*/
 add_filter( 'the_content', 'nysnc_print_byebyebye_line' );
