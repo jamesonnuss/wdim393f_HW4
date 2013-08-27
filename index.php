@@ -79,7 +79,7 @@ function nysnc_save_meta_box( $post_id, $post ) {
     }
 
     //Help from Kyle Riemensnider
-    if ( !isset($_POST['nysnc_bye_line_noncename']) || ! wp_verify_nonce( $_POST['nysnc_bye_line_noncename'], 'bye-line-save') ){
+    if ( !isset($_POST['nsync_bye_line_noncename']) || ! wp_verify_nonce( $_POST['nsync_bye_line_noncename'], 'bye-line-save') ){
         return;
     }    
 
