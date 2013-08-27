@@ -45,7 +45,7 @@ function nysnc_display_meta_box( $post, $args ) {
         <label for="byeline">
             <?php _e( 'Bye Bye Bye Line', 'byebyebye_lines' ); ?>:&nbsp;
         </label>
-        <input type="text" class="widefat" name="byeline" value="<?php echo esc_attr($value);?>"/>
+            <input type="text" class="widefat" name="byeline" value="<?php echo esc_attr($value);?>"/>
         <em>
             <?php _e( 'HTML is not allowed', 'byebyebye_lines' ); ?>
         </em>
@@ -60,6 +60,9 @@ function nysnc_display_meta_box( $post, $args ) {
  * @param  object    $post       The current post object.
  */
 function nysnc_save_meta_box( $post_id, $post ) {
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ){
+        return;
+    }
     
     if ( 'page' === $_POST[ 'post_type' ] ) {
         if ( ! current_user_can( 'edit_page', $post_id ) ) {
@@ -76,7 +79,7 @@ function nysnc_save_meta_box( $post_id, $post ) {
     }
 
     //Help from Kyle Riemensnider
-    if ( !isset($_POST['nysnc_bye_line_noncename']) || ! wp_verify_nonce( $_POST['nysnc_bye_line_noncename'], 'saving-byeline' ) ){
+    if ( !isset($_POST['nysnc_bye_line_noncename']) || ! wp_verify_nonce( $_POST['nysnc_bye_line_noncename'], 'bye-line-save') ){
         return;
     }    
 
